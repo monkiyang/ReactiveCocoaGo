@@ -9,6 +9,8 @@
 #import "LoginView.h"
 
 @interface LoginView ()
+@property (nonatomic, strong) UIButton *loginButton;
+@property (nonatomic, strong) UILabel *statusLabel;
 @end
 
 @implementation LoginView

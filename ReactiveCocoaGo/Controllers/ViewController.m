@@ -12,6 +12,8 @@
 
 #import "LoginView.h"
 
+#import "LoginViewModel.h"
+
 @interface ViewController ()
 @property (nonatomic, copy) NSString *username;///<用户昵称
 
@@ -20,6 +22,7 @@
 @property (nonatomic, assign) BOOL createEnabled;
 
 @property (nonatomic, strong) LoginView *loginView;
+@property (nonatomic, strong) LoginViewModel *loginViewModel;
 @end
 
 @implementation ViewController
@@ -66,32 +69,6 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[loginView]" options:0 metrics:nil views:views]];
 }
 
-- (RACSignal *)login {
-    
-    RACSignal *loginSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        
-        //模拟登录请求
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
-                //登录失败
-//                [subscriber sendError:[NSError errorWithDomain:@"com.monkiyang.login.error" code:1000 userInfo:@{NSLocalizedDescriptionKey: @"login failed"}]];
-                //登录成功
-                [subscriber sendNext:@"login successfully"];
-                [subscriber sendCompleted];
-            });
-        });
-        
-        return [RACDisposable disposableWithBlock:^{
-            //信号丢弃后block处理
-            NSLog(@"\n%s_disposableWithBlock", __func__);
-        }];
-    }];
-    
-    return loginSignal;
-}
-
 - (void)learnRACObserve {
     //当self.username改变时打印用户名称
     [[self rac_valuesForKeyPath:@"username" observer:self] subscribeNext:^(NSString *username) {
@@ -130,15 +107,12 @@
 - (void)learnRACCommand {
     //点击登录按钮处理登录请求
     //RACCommand绑定UI响应事件
+    self.loginView.loginButton.rac_command = self.loginViewModel.loginCommand;
     @weakify(self);
-    RACCommand *loginCommand = [[RACCommand alloc] initWithSignalBlock:^(UIButton *sender) {
-        NSLog(@"\n%s\nlogin button clicked", __func__);
+    [_loginViewModel.loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
         @strongify(self);
         self.loginView.statusLabel.text = @"登录中...";
-        return [self login];
-    }];
-    [loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
-        
+
         [loginSignal subscribeNext:^(NSString *messge) {
             NSLog(@"\n%s\n%@", __func__, messge);
             @strongify(self);
@@ -146,11 +120,11 @@
         }];
     }];
     //.errors错误信号订阅nextBlock
-    [loginCommand.errors subscribeNext:^(NSError *error) {
+    [_loginViewModel.loginCommand.errors subscribeNext:^(NSError *error) {
         NSLog(@"\n%s\n%@", __func__, error);
+        @strongify(self);
         self.loginView.statusLabel.text = @"登录失败";
     }];
-    self.loginView.loginButton.rac_command = loginCommand;
 }
 
 #pragma mark - KVO Methods
@@ -165,5 +139,12 @@
         _loginView = [[LoginView alloc] init];
     }
     return _loginView;
+}
+
+- (LoginViewModel *)loginViewModel {
+    if (!_loginViewModel) {
+        _loginViewModel = [[LoginViewModel alloc] init];
+    }
+    return _loginViewModel;
 }
 @end

@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LoginView : UIView
-@property (nonatomic, strong) UIButton *loginButton;
-@property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong, readonly) UIButton *loginButton;
+@property (nonatomic, strong, readonly) UILabel *statusLabel;
 @end

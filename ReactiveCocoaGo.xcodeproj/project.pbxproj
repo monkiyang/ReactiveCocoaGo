@@ -16,6 +16,7 @@
 		85143DC71E6D7515004346A3 /* ReactiveCocoaGoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DC61E6D7515004346A3 /* ReactiveCocoaGoTests.m */; };
 		85143DE71E70F59C004346A3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DE61E70F59C004346A3 /* ViewController.m */; };
 		85143DED1E710053004346A3 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DEC1E710053004346A3 /* LoginView.m */; };
+		85143DF31E712E44004346A3 /* LoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DF21E712E44004346A3 /* LoginViewModel.m */; };
 		DEA7E108F2492D26E2F52363 /* libPods-ReactiveCocoaGoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2383B3A6C0A039E80571CF1 /* libPods-ReactiveCocoaGoTests.a */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,8 @@
 		85143DE61E70F59C004346A3 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		85143DEB1E710053004346A3 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		85143DEC1E710053004346A3 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
+		85143DF11E712E44004346A3 /* LoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewModel.h; sourceTree = "<group>"; };
+		85143DF21E712E44004346A3 /* LoginViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewModel.m; sourceTree = "<group>"; };
 		9CEE78186884F65AD7F64A1A /* Pods-ReactiveCocoaGo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaGo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaGo/Pods-ReactiveCocoaGo.debug.xcconfig"; sourceTree = "<group>"; };
 		B2383B3A6C0A039E80571CF1 /* libPods-ReactiveCocoaGoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactiveCocoaGoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7D3F16054FD1708832DBFE3 /* Pods-ReactiveCocoaGoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaGoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaGoTests/Pods-ReactiveCocoaGoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -147,6 +150,8 @@
 		85143DE91E70F5D2004346A3 /* VIewModels */ = {
 			isa = PBXGroup;
 			children = (
+				85143DF11E712E44004346A3 /* LoginViewModel.h */,
+				85143DF21E712E44004346A3 /* LoginViewModel.m */,
 			);
 			path = VIewModels;
 			sourceTree = "<group>";
@@ -386,6 +391,7 @@
 				85143DE71E70F59C004346A3 /* ViewController.m in Sources */,
 				85143DB11E6D7515004346A3 /* AppDelegate.m in Sources */,
 				85143DED1E710053004346A3 /* LoginView.m in Sources */,
+				85143DF31E712E44004346A3 /* LoginViewModel.m in Sources */,
 				85143DAE1E6D7515004346A3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
