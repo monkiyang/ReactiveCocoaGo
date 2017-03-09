@@ -10,15 +10,16 @@
 
 #import <ReactiveObjC/ReactiveObjC.h>
 
-@interface ViewController ()
-@property (nonatomic, copy) NSString *username;
+#import "LoginView.h"
 
-@property (nonatomic, copy) NSString *password;
+@interface ViewController ()
+@property (nonatomic, copy) NSString *username;///<用户昵称
+
+@property (nonatomic, copy) NSString *password;///<密码
 @property (nonatomic, copy) NSString *passwordConfirmation;
 @property (nonatomic, assign) BOOL createEnabled;
 
-@property (nonatomic, strong) UIButton *loginButton;
-@property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) LoginView *loginView;
 @end
 
 @implementation ViewController
@@ -57,18 +58,12 @@
 
 #pragma mark - Private Methods
 - (void)setupSubviews {
-    [self.view addSubview:self.loginButton];
+    [self.view addSubview:self.loginView];
     
-    _loginButton.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *views = @{@"loginButton": _loginButton};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[loginButton(44.)]" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20.-[loginButton(44.)]" options:0 metrics:nil views:views]];
-    
-    [self.view addSubview:self.statusLabel];
-    
-    _statusLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    views = @{@"loginButton": _loginButton , @"statusLabel": _statusLabel};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[loginButton][statusLabel]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+    _loginView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *views = @{@"loginView": _loginView};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[loginView]" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[loginView]" options:0 metrics:nil views:views]];
 }
 
 - (RACSignal *)login {
@@ -139,7 +134,7 @@
     RACCommand *loginCommand = [[RACCommand alloc] initWithSignalBlock:^(UIButton *sender) {
         NSLog(@"\n%s\nlogin button clicked", __func__);
         @strongify(self);
-        self.statusLabel.text = @"登录中...";
+        self.loginView.statusLabel.text = @"登录中...";
         return [self login];
     }];
     [loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
@@ -147,15 +142,15 @@
         [loginSignal subscribeNext:^(NSString *messge) {
             NSLog(@"\n%s\n%@", __func__, messge);
             @strongify(self);
-            self.statusLabel.text = @"登录成功";
+            self.loginView.statusLabel.text = @"登录成功";
         }];
     }];
     //.errors错误信号订阅nextBlock
     [loginCommand.errors subscribeNext:^(NSError *error) {
         NSLog(@"\n%s\n%@", __func__, error);
-        self.statusLabel.text = @"登录失败";
+        self.loginView.statusLabel.text = @"登录失败";
     }];
-    self.loginButton.rac_command = loginCommand;
+    self.loginView.loginButton.rac_command = loginCommand;
 }
 
 #pragma mark - KVO Methods
@@ -165,25 +160,10 @@
 }
 
 #pragma mark - Setter && Getter Methods
-- (UIButton *)loginButton {
-    if (!_loginButton) {
-        _loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _loginButton.exclusiveTouch = YES;
-        _loginButton.titleLabel.font = [UIFont systemFontOfSize:14.];
-        _loginButton.backgroundColor = [UIColor greenColor];
-        
-        [_loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_loginButton setTitle:@"登录" forState:UIControlStateNormal];
+- (LoginView *)loginView {
+    if (!_loginView) {
+        _loginView = [[LoginView alloc] init];
     }
-    return _loginButton;
-}
-
-- (UILabel *)statusLabel {
-    if (!_statusLabel) {
-        _statusLabel = [[UILabel alloc] init];
-        _statusLabel.font = [UIFont systemFontOfSize:14.];
-        _statusLabel.textColor = [UIColor blackColor];
-    }
-    return _statusLabel;
+    return _loginView;
 }
 @end
