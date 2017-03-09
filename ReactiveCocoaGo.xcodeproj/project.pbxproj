@@ -543,7 +543,7 @@
 				INFOPLIST_FILE = ReactiveCocoaGo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ymq.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monki.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -557,7 +557,7 @@
 				INFOPLIST_FILE = ReactiveCocoaGo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ymq.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monki.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
