@@ -23,8 +23,17 @@
 
 @implementation ViewController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        self.title = @"ReactiveCocoaGo";
+    }
+    return self;
+}
+
 - (void)loadView {
     [super loadView];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self setupSubviews];
 }
@@ -32,60 +41,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //当self.username改变时打印用户名称
-    [[self rac_valuesForKeyPath:@"username" observer:self] subscribeNext:^(NSString *username) {
-        NSLog(@"\n%s\nusername:%@", __func__, username);
-    }];
-    [[self rac_valuesAndChangesForKeyPath:@"username" options:NSKeyValueObservingOptionNew observer:self] subscribeNext:^(RACTuple *tuple) {
-        NSString *username = tuple.first;
-        NSLog(@"\n%s\nusername:%@", __func__, username);
-    }];
-    //以等于“Mengqi Yang”规则来过滤
-    //skip: 跳过skipCount次链式调用
-    [[[RACObserve(self, username) skip:1] filter:^(NSString *username) {
-        return [username isEqualToString:@"Mengqi Yang"];
-    }] subscribeNext:^(NSString *username) {
-        NSLog(@"\n%s\nusername:%@", __func__, username);
-    }];
-    [self addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:nil];
-    self.username = @"ReactiveObjC";
-    //对比RAC与KVO，链式调用代码更集中连贯
-    
-    //当密码与确认密码相等时self.createEnabled为true
-    //RAC()绑定target与keypath，nilvalue意义不明
-    //combineLatest: 联合信号对象
-    //reduce: block返回值即为属性值
-    RAC(self, createEnabled) = [RACSignal combineLatest:@[RACObserve(self, password), RACObserve(self, passwordConfirmation)] reduce:^(NSString *password, NSString *passwordConfirmation) {
-        return @([password isEqualToString:passwordConfirmation]);
-    }];
-    self.password = @"123";
-    NSLog(@"\n%s\n_createEnabled:%@", __func__, _createEnabled?@"YES":@"NO");
-    self.passwordConfirmation = @"123";
-    NSLog(@"\n%s\n_createEnabled:%@", __func__, _createEnabled?@"YES":@"NO");
-    
-    //点击登录按钮处理登录请求
-    //RACCommand绑定UI响应事件
-    @weakify(self);
-    RACCommand *loginCommand = [[RACCommand alloc] initWithSignalBlock:^(UIButton *sender) {
-        NSLog(@"\n%s\nlogin button clicked", __func__);
-        @strongify(self);
-        self.statusLabel.text = @"登录中...";
-        return [self login];
-    }];
-    [loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
-        
-        [loginSignal subscribeNext:^(NSString *messge) {
-            NSLog(@"\n%s\n%@", __func__, messge);
-            @strongify(self);
-            self.statusLabel.text = @"登录成功";
-        }];
-    }];
-    //.errors错误信号订阅nextBlock
-    [loginCommand.errors subscribeNext:^(NSError *error) {
-        NSLog(@"\n%s\n%@", __func__, error);
-        self.statusLabel.text = @"登录失败";
-    }];
-    self.loginButton.rac_command = loginCommand;
+    [self learnRACObserve];
+    [self learnRAC];
+    [self learnRACCommand];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,6 +95,67 @@
     }];
     
     return loginSignal;
+}
+
+- (void)learnRACObserve {
+    //当self.username改变时打印用户名称
+    [[self rac_valuesForKeyPath:@"username" observer:self] subscribeNext:^(NSString *username) {
+        NSLog(@"\n%s\nusername:%@", __func__, username);
+    }];
+    [[self rac_valuesAndChangesForKeyPath:@"username" options:NSKeyValueObservingOptionNew observer:self] subscribeNext:^(RACTuple *tuple) {
+        NSString *username = tuple.first;
+        NSLog(@"\n%s\nusername:%@", __func__, username);
+    }];
+    //以等于“Mengqi Yang”规则来过滤
+    //skip: 跳过skipCount次链式调用
+    [[[RACObserve(self, username) skip:1] filter:^(NSString *username) {
+        return [username isEqualToString:@"Mengqi Yang"];
+    }] subscribeNext:^(NSString *username) {
+        NSLog(@"\n%s\nusername:%@", __func__, username);
+    }];
+    [self addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:nil];
+    self.username = @"ReactiveObjC";
+    //对比RAC与KVO，链式调用代码更集中连贯
+}
+
+- (void)learnRAC {
+    //当密码与确认密码相等时self.createEnabled为true
+    //RAC()绑定target与keypath，nilvalue意义不明
+    //combineLatest: 联合信号对象
+    //reduce: block返回值即为属性值
+    RAC(self, createEnabled) = [RACSignal combineLatest:@[RACObserve(self, password), RACObserve(self, passwordConfirmation)] reduce:^(NSString *password, NSString *passwordConfirmation) {
+        return @([password isEqualToString:passwordConfirmation]);
+    }];
+    self.password = @"123";
+    NSLog(@"\n%s\n_createEnabled:%@", __func__, _createEnabled?@"YES":@"NO");
+    self.passwordConfirmation = @"123";
+    NSLog(@"\n%s\n_createEnabled:%@", __func__, _createEnabled?@"YES":@"NO");
+}
+
+- (void)learnRACCommand {
+    //点击登录按钮处理登录请求
+    //RACCommand绑定UI响应事件
+    @weakify(self);
+    RACCommand *loginCommand = [[RACCommand alloc] initWithSignalBlock:^(UIButton *sender) {
+        NSLog(@"\n%s\nlogin button clicked", __func__);
+        @strongify(self);
+        self.statusLabel.text = @"登录中...";
+        return [self login];
+    }];
+    [loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
+        
+        [loginSignal subscribeNext:^(NSString *messge) {
+            NSLog(@"\n%s\n%@", __func__, messge);
+            @strongify(self);
+            self.statusLabel.text = @"登录成功";
+        }];
+    }];
+    //.errors错误信号订阅nextBlock
+    [loginCommand.errors subscribeNext:^(NSError *error) {
+        NSLog(@"\n%s\n%@", __func__, error);
+        self.statusLabel.text = @"登录失败";
+    }];
+    self.loginButton.rac_command = loginCommand;
 }
 
 #pragma mark - KVO Methods
