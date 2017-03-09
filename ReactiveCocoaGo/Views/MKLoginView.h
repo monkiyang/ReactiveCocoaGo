@@ -1,5 +1,5 @@
 //
-//  LoginView.h
+//  MKLoginView.h
 //  ReactiveCocoaGo
 //
 //  Created by YangMengqi on 2017/3/9.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginView : UIView
+@interface MKLoginView : UIView
 @property (nonatomic, strong, readonly) UIButton *loginButton;
 @property (nonatomic, strong, readonly) UILabel *statusLabel;
 @end

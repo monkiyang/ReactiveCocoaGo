@@ -1,5 +1,5 @@
 //
-//  LoginViewModel.h
+//  MKUserViewModel.h
 //  ReactiveCocoaGo
 //
 //  Created by YangMengqi on 2017/3/9.
@@ -10,6 +10,10 @@
 
 #import <ReactiveObjC/ReactiveObjC.h>
 
-@interface LoginViewModel : NSObject
+#import "MKUserModel.h"
+
+@interface MKUserViewModel : NSObject
+@property (nonatomic, strong, readonly) MKUserModel *userModel;
+
 @property (nonatomic, strong, readonly) RACCommand *loginCommand;
 @end

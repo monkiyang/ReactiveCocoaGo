@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MKMainViewController.h
 //  ReactiveCocoaGo
 //
 //  Created by YangMengqi on 2017/3/6.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface MKMainViewController : UIViewController
 
 @end
 

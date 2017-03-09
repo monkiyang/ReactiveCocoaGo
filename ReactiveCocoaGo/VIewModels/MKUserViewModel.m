@@ -1,18 +1,20 @@
 //
-//  LoginViewModel.m
+//  MKUserViewModel.m
 //  ReactiveCocoaGo
 //
 //  Created by YangMengqi on 2017/3/9.
 //  Copyright © 2017年 YangMengqi. All rights reserved.
 //
 
-#import "LoginViewModel.h"
+#import "MKUserViewModel.h"
 
-@interface LoginViewModel ()
+@interface MKUserViewModel ()
 @property (nonatomic, strong) RACCommand *loginCommand;
+
+@property (nonatomic, strong) MKUserModel *userModel;
 @end
 
-@implementation LoginViewModel
+@implementation MKUserViewModel
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -35,6 +37,8 @@
 //                [subscriber sendError:[NSError errorWithDomain:@"com.monkiyang.login.error" code:1000 userInfo:@{NSLocalizedDescriptionKey: @"login failed"}]];
                 
                 //登录成功
+                //解析用户数据
+                self.userModel = [MKUserModel useModelWithUsername:@"Monki Yang" gender:@"Man"];
                 [subscriber sendNext:@"login successfully"];
                 [subscriber sendCompleted];
             });

@@ -1,19 +1,19 @@
 //
-//  LoginView.m
+//  MKLoginView.m
 //  ReactiveCocoaGo
 //
 //  Created by YangMengqi on 2017/3/9.
 //  Copyright © 2017年 YangMengqi. All rights reserved.
 //
 
-#import "LoginView.h"
+#import "MKLoginView.h"
 
-@interface LoginView ()
+@interface MKLoginView ()
 @property (nonatomic, strong) UIButton *loginButton;
 @property (nonatomic, strong) UILabel *statusLabel;
 @end
 
-@implementation LoginView
+@implementation MKLoginView
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -30,13 +30,13 @@
     _loginButton.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *views = @{@"loginButton": _loginButton};
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[loginButton(44.)]" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[loginButton(44.)]-(>=0)-|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[loginButton(44.)]|" options:0 metrics:nil views:views]];
     
     [self addSubview:self.statusLabel];
     
     _statusLabel.translatesAutoresizingMaskIntoConstraints = NO;
     views = @{@"loginButton": _loginButton , @"statusLabel": _statusLabel};
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[loginButton][statusLabel]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[loginButton][statusLabel]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 
 #pragma mark - Setter && Getter Methods

@@ -1,31 +1,34 @@
 //
-//  ViewController.m
+//  MKMainViewController.m
 //  ReactiveCocoaGo
 //
 //  Created by YangMengqi on 2017/3/6.
 //  Copyright © 2017年 YangMengqi. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "MKMainViewController.h"
 
 #import <ReactiveObjC/ReactiveObjC.h>
 
-#import "LoginView.h"
+#import "MKLoginView.h"
+#import "MKInfoView.h"
 
-#import "LoginViewModel.h"
+#import "MKUserViewModel.h"
 
-@interface ViewController ()
-@property (nonatomic, copy) NSString *username;///<用户昵称
+@interface MKMainViewController ()
+@property (nonatomic, copy) NSString *account;///<账号
 
 @property (nonatomic, copy) NSString *password;///<密码
 @property (nonatomic, copy) NSString *passwordConfirmation;
 @property (nonatomic, assign) BOOL createEnabled;
 
-@property (nonatomic, strong) LoginView *loginView;
-@property (nonatomic, strong) LoginViewModel *loginViewModel;
+@property (nonatomic, strong) MKLoginView *loginView;
+@property (nonatomic, strong) MKInfoView *infoView;
+
+@property (nonatomic, strong) MKUserViewModel *userViewModel;
 @end
 
-@implementation ViewController
+@implementation MKMainViewController
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -67,26 +70,32 @@
     NSDictionary *views = @{@"loginView": _loginView};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[loginView]" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[loginView]" options:0 metrics:nil views:views]];
+    
+    [self.view addSubview:self.infoView];
+    
+    _infoView.translatesAutoresizingMaskIntoConstraints = NO;
+    views = @{@"loginView": _loginView, @"infoView": _infoView};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[loginView][infoView]" options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
 }
 
 - (void)learnRACObserve {
-    //当self.username改变时打印用户名称
-    [[self rac_valuesForKeyPath:@"username" observer:self] subscribeNext:^(NSString *username) {
-        NSLog(@"\n%s\nusername:%@", __func__, username);
+    //当self.account改变时打印用户名称
+    [[self rac_valuesForKeyPath:@"account" observer:self] subscribeNext:^(NSString *account) {
+        NSLog(@"\n%s\naccount:%@", __func__, account);
     }];
-    [[self rac_valuesAndChangesForKeyPath:@"username" options:NSKeyValueObservingOptionNew observer:self] subscribeNext:^(RACTuple *tuple) {
-        NSString *username = tuple.first;
-        NSLog(@"\n%s\nusername:%@", __func__, username);
+    [[self rac_valuesAndChangesForKeyPath:@"account" options:NSKeyValueObservingOptionNew observer:self] subscribeNext:^(RACTuple *tuple) {
+        NSString *account = tuple.first;
+        NSLog(@"\n%s\naccount:%@", __func__, account);
     }];
     //以等于“Mengqi Yang”规则来过滤
     //skip: 跳过skipCount次链式调用
-    [[[RACObserve(self, username) skip:1] filter:^(NSString *username) {
-        return [username isEqualToString:@"Mengqi Yang"];
-    }] subscribeNext:^(NSString *username) {
-        NSLog(@"\n%s\nusername:%@", __func__, username);
+    [[[RACObserve(self, account) skip:1] filter:^(NSString *account) {
+        return [account isEqualToString:@"Mengqi Yang"];
+    }] subscribeNext:^(NSString *account) {
+        NSLog(@"\n%s\naccount:%@", __func__, account);
     }];
-    [self addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:nil];
-    self.username = @"ReactiveObjC";
+    [self addObserver:self forKeyPath:@"account" options:NSKeyValueObservingOptionNew context:nil];
+    self.account = @"ReactiveObjC";
     //对比RAC与KVO，链式调用代码更集中连贯
 }
 
@@ -107,44 +116,57 @@
 - (void)learnRACCommand {
     //点击登录按钮处理登录请求
     //RACCommand绑定UI响应事件
-    self.loginView.loginButton.rac_command = self.loginViewModel.loginCommand;
+    self.loginView.loginButton.rac_command = self.userViewModel.loginCommand;
     @weakify(self);
-    [_loginViewModel.loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
+    [_userViewModel.loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
         @strongify(self);
         self.loginView.statusLabel.text = @"登录中...";
-
+        self.infoView.nicknameLabel.text = @"";
+        self.infoView.genderLabel.text = @"";
+        
         [loginSignal subscribeNext:^(NSString *messge) {
             NSLog(@"\n%s\n%@", __func__, messge);
             @strongify(self);
             self.loginView.statusLabel.text = @"登录成功";
+            self.infoView.nicknameLabel.text = self.userViewModel.userModel.username;
+            self.infoView.genderLabel.text = self.userViewModel.userModel.gender;
         }];
     }];
     //.errors错误信号订阅nextBlock
-    [_loginViewModel.loginCommand.errors subscribeNext:^(NSError *error) {
+    [_userViewModel.loginCommand.errors subscribeNext:^(NSError *error) {
         NSLog(@"\n%s\n%@", __func__, error);
         @strongify(self);
         self.loginView.statusLabel.text = @"登录失败";
+        self.infoView.nicknameLabel.text = @"";
+        self.infoView.genderLabel.text = @"";
     }];
 }
 
 #pragma mark - KVO Methods
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    NSString *username = change[NSKeyValueChangeNewKey];
-    NSLog(@"\n%s\nusername:%@", __func__, username);
+    NSString *account = change[NSKeyValueChangeNewKey];
+    NSLog(@"\n%s\naccount:%@", __func__, account);
 }
 
 #pragma mark - Setter && Getter Methods
-- (LoginView *)loginView {
+- (MKLoginView *)loginView {
     if (!_loginView) {
-        _loginView = [[LoginView alloc] init];
+        _loginView = [[MKLoginView alloc] init];
     }
     return _loginView;
 }
 
-- (LoginViewModel *)loginViewModel {
-    if (!_loginViewModel) {
-        _loginViewModel = [[LoginViewModel alloc] init];
+- (MKInfoView *)infoView {
+    if (!_infoView) {
+        _infoView = [[MKInfoView alloc] init];
     }
-    return _loginViewModel;
+    return _infoView;
+}
+
+- (MKUserViewModel *)userViewModel {
+    if (!_userViewModel) {
+        _userViewModel = [[MKUserViewModel alloc] init];
+    }
+    return _userViewModel;
 }
 @end

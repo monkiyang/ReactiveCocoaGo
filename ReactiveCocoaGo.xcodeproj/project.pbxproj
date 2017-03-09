@@ -14,9 +14,11 @@
 		85143DB91E6D7515004346A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85143DB81E6D7515004346A3 /* Assets.xcassets */; };
 		85143DBC1E6D7515004346A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85143DBA1E6D7515004346A3 /* LaunchScreen.storyboard */; };
 		85143DC71E6D7515004346A3 /* ReactiveCocoaGoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DC61E6D7515004346A3 /* ReactiveCocoaGoTests.m */; };
-		85143DE71E70F59C004346A3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DE61E70F59C004346A3 /* ViewController.m */; };
-		85143DED1E710053004346A3 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DEC1E710053004346A3 /* LoginView.m */; };
-		85143DF31E712E44004346A3 /* LoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DF21E712E44004346A3 /* LoginViewModel.m */; };
+		85143DE71E70F59C004346A3 /* MKMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DE61E70F59C004346A3 /* MKMainViewController.m */; };
+		85143DED1E710053004346A3 /* MKLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DEC1E710053004346A3 /* MKLoginView.m */; };
+		85143DF31E712E44004346A3 /* MKUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DF21E712E44004346A3 /* MKUserViewModel.m */; };
+		85143DF61E7135AA004346A3 /* MKUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DF51E7135AA004346A3 /* MKUserModel.m */; };
+		85143DF91E713D79004346A3 /* MKInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DF81E713D79004346A3 /* MKInfoView.m */; };
 		DEA7E108F2492D26E2F52363 /* libPods-ReactiveCocoaGoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2383B3A6C0A039E80571CF1 /* libPods-ReactiveCocoaGoTests.a */; };
 /* End PBXBuildFile section */
 
@@ -45,12 +47,16 @@
 		85143DC21E6D7515004346A3 /* ReactiveCocoaGoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactiveCocoaGoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85143DC61E6D7515004346A3 /* ReactiveCocoaGoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactiveCocoaGoTests.m; sourceTree = "<group>"; };
 		85143DC81E6D7515004346A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		85143DE51E70F59C004346A3 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		85143DE61E70F59C004346A3 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		85143DEB1E710053004346A3 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
-		85143DEC1E710053004346A3 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
-		85143DF11E712E44004346A3 /* LoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewModel.h; sourceTree = "<group>"; };
-		85143DF21E712E44004346A3 /* LoginViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewModel.m; sourceTree = "<group>"; };
+		85143DE51E70F59C004346A3 /* MKMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKMainViewController.h; sourceTree = "<group>"; };
+		85143DE61E70F59C004346A3 /* MKMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKMainViewController.m; sourceTree = "<group>"; };
+		85143DEB1E710053004346A3 /* MKLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKLoginView.h; sourceTree = "<group>"; };
+		85143DEC1E710053004346A3 /* MKLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKLoginView.m; sourceTree = "<group>"; };
+		85143DF11E712E44004346A3 /* MKUserViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKUserViewModel.h; sourceTree = "<group>"; };
+		85143DF21E712E44004346A3 /* MKUserViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKUserViewModel.m; sourceTree = "<group>"; };
+		85143DF41E7135AA004346A3 /* MKUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKUserModel.h; sourceTree = "<group>"; };
+		85143DF51E7135AA004346A3 /* MKUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKUserModel.m; sourceTree = "<group>"; };
+		85143DF71E713D79004346A3 /* MKInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKInfoView.h; sourceTree = "<group>"; };
+		85143DF81E713D79004346A3 /* MKInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKInfoView.m; sourceTree = "<group>"; };
 		9CEE78186884F65AD7F64A1A /* Pods-ReactiveCocoaGo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaGo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaGo/Pods-ReactiveCocoaGo.debug.xcconfig"; sourceTree = "<group>"; };
 		B2383B3A6C0A039E80571CF1 /* libPods-ReactiveCocoaGoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactiveCocoaGoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7D3F16054FD1708832DBFE3 /* Pods-ReactiveCocoaGoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaGoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaGoTests/Pods-ReactiveCocoaGoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,8 +140,8 @@
 		85143DE41E70F59C004346A3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				85143DE51E70F59C004346A3 /* ViewController.h */,
-				85143DE61E70F59C004346A3 /* ViewController.m */,
+				85143DE51E70F59C004346A3 /* MKMainViewController.h */,
+				85143DE61E70F59C004346A3 /* MKMainViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -143,6 +149,8 @@
 		85143DE81E70F5D2004346A3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				85143DF41E7135AA004346A3 /* MKUserModel.h */,
+				85143DF51E7135AA004346A3 /* MKUserModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -150,8 +158,8 @@
 		85143DE91E70F5D2004346A3 /* VIewModels */ = {
 			isa = PBXGroup;
 			children = (
-				85143DF11E712E44004346A3 /* LoginViewModel.h */,
-				85143DF21E712E44004346A3 /* LoginViewModel.m */,
+				85143DF11E712E44004346A3 /* MKUserViewModel.h */,
+				85143DF21E712E44004346A3 /* MKUserViewModel.m */,
 			);
 			path = VIewModels;
 			sourceTree = "<group>";
@@ -159,8 +167,10 @@
 		85143DEA1E70F5D2004346A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				85143DEB1E710053004346A3 /* LoginView.h */,
-				85143DEC1E710053004346A3 /* LoginView.m */,
+				85143DEB1E710053004346A3 /* MKLoginView.h */,
+				85143DEC1E710053004346A3 /* MKLoginView.m */,
+				85143DF71E713D79004346A3 /* MKInfoView.h */,
+				85143DF81E713D79004346A3 /* MKInfoView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -388,10 +398,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85143DE71E70F59C004346A3 /* ViewController.m in Sources */,
+				85143DE71E70F59C004346A3 /* MKMainViewController.m in Sources */,
 				85143DB11E6D7515004346A3 /* AppDelegate.m in Sources */,
-				85143DED1E710053004346A3 /* LoginView.m in Sources */,
-				85143DF31E712E44004346A3 /* LoginViewModel.m in Sources */,
+				85143DF61E7135AA004346A3 /* MKUserModel.m in Sources */,
+				85143DF91E713D79004346A3 /* MKInfoView.m in Sources */,
+				85143DED1E710053004346A3 /* MKLoginView.m in Sources */,
+				85143DF31E712E44004346A3 /* MKUserViewModel.m in Sources */,
 				85143DAE1E6D7515004346A3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
