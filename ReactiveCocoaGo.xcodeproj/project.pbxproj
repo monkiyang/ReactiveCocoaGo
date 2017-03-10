@@ -19,6 +19,7 @@
 		85143DF31E712E44004346A3 /* MKUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DF21E712E44004346A3 /* MKUserViewModel.m */; };
 		85143DF61E7135AA004346A3 /* MKUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DF51E7135AA004346A3 /* MKUserModel.m */; };
 		85143DF91E713D79004346A3 /* MKInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85143DF81E713D79004346A3 /* MKInfoView.m */; };
+		85162BBE1E72545900779165 /* MKRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 85162BBD1E72545900779165 /* MKRequest.m */; };
 		DEA7E108F2492D26E2F52363 /* libPods-ReactiveCocoaGoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2383B3A6C0A039E80571CF1 /* libPods-ReactiveCocoaGoTests.a */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,8 @@
 		85143DF51E7135AA004346A3 /* MKUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKUserModel.m; sourceTree = "<group>"; };
 		85143DF71E713D79004346A3 /* MKInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKInfoView.h; sourceTree = "<group>"; };
 		85143DF81E713D79004346A3 /* MKInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKInfoView.m; sourceTree = "<group>"; };
+		85162BBC1E72545900779165 /* MKRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKRequest.h; sourceTree = "<group>"; };
+		85162BBD1E72545900779165 /* MKRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKRequest.m; sourceTree = "<group>"; };
 		9CEE78186884F65AD7F64A1A /* Pods-ReactiveCocoaGo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaGo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaGo/Pods-ReactiveCocoaGo.debug.xcconfig"; sourceTree = "<group>"; };
 		B2383B3A6C0A039E80571CF1 /* libPods-ReactiveCocoaGoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactiveCocoaGoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7D3F16054FD1708832DBFE3 /* Pods-ReactiveCocoaGoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaGoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaGoTests/Pods-ReactiveCocoaGoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 				85143DEA1E70F5D2004346A3 /* Views */,
 				85143DE41E70F59C004346A3 /* Controllers */,
 				85143DE91E70F5D2004346A3 /* VIewModels */,
+				85162BBB1E72543300779165 /* Requests */,
 				85143DAF1E6D7515004346A3 /* AppDelegate.h */,
 				85143DB01E6D7515004346A3 /* AppDelegate.m */,
 				85143DB51E6D7515004346A3 /* Main.storyboard */,
@@ -173,6 +177,15 @@
 				85143DF81E713D79004346A3 /* MKInfoView.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		85162BBB1E72543300779165 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				85162BBC1E72545900779165 /* MKRequest.h */,
+				85162BBD1E72545900779165 /* MKRequest.m */,
+			);
+			path = Requests;
 			sourceTree = "<group>";
 		};
 		B7F5FF86BBA6321AE7054DBC /* Pods */ = {
@@ -405,6 +418,7 @@
 				85143DED1E710053004346A3 /* MKLoginView.m in Sources */,
 				85143DF31E712E44004346A3 /* MKUserViewModel.m in Sources */,
 				85143DAE1E6D7515004346A3 /* main.m in Sources */,
+				85162BBE1E72545900779165 /* MKRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

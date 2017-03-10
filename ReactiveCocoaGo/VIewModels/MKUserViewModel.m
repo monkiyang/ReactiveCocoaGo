@@ -8,6 +8,8 @@
 
 #import "MKUserViewModel.h"
 
+#import "MKRequest.h"
+
 @interface MKUserViewModel ()
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic, strong) MKUserModel *userModel;
@@ -34,23 +36,25 @@
     
     @weakify(self);
     RACSignal *loginSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        
-        //模拟登录请求
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                @strongify(self);
-                //登录失败
-//                [subscriber sendError:[NSError errorWithDomain:@"com.monkiyang.login.error" code:1000 userInfo:@{NSLocalizedDescriptionKey: @"login failed"}]];
-                
-                //登录成功
-                //解析用户数据
-                self.userModel.nickname = @"Monki Yang";
-                self.userModel.gender = @"male";
-                [subscriber sendNext:@"login successfully"];
-                [subscriber sendCompleted];
-            });
-        });
+        self.status = @"登录中...";
+        self.userModel.nickname = @"";
+        self.userModel.gender = @"";
+
+        [MKRequest loginWithUsername:@"monki" password:@"123" success:^{
+            @strongify(self);
+            self.status = @"登录成功";
+            self.userModel.nickname = @"Monki Yang";
+            self.userModel.gender = @"male";
+
+            [subscriber sendNext:@"login successfully"];
+            [subscriber sendCompleted];
+        } failure:^{
+            self.status = @"登录失败";
+            self.userModel.nickname = @"";
+            self.userModel.gender = @"";
+
+            [subscriber sendError:[NSError errorWithDomain:@"com.monkiyang.login.error" code:1000 userInfo:@{NSLocalizedDescriptionKey: @"login failed"}]];
+        }];
         
         return [RACDisposable disposableWithBlock:^{
             //信号丢弃后block处理
@@ -86,24 +90,14 @@
             return [self login];
         }];
         [_loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
-            @strongify(self);
-            self.status = @"登录中...";
-            self.userModel.nickname = @"";
-            self.userModel.gender = @"";
             
             [loginSignal subscribeNext:^(NSString *messge) {
                 NSLog(@"\n%s\n%@", __func__, messge);
-                @strongify(self);
-                self.status = @"登录成功";
             }];
         }];
         //.errors错误信号订阅nextBlock
         [_loginCommand.errors subscribeNext:^(NSError *error) {
             NSLog(@"\n%s\n%@", __func__, error);
-            @strongify(self);
-            self.status = @"登录失败";
-            self.userModel.nickname = @"";
-            self.userModel.gender = @"";
         }];
     }
     return _loginCommand;
