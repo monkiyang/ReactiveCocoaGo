@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface MKUserModel : NSObject
-@property (nonatomic, copy, readonly) NSString *username;
-@property (nonatomic, copy, readonly) NSString *gender;
-
-+ (instancetype)useModelWithUsername:(NSString *)username gender:(NSString *)gender;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *gender;
 @end

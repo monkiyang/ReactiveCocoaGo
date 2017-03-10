@@ -16,7 +16,7 @@
 #import "MKUserViewModel.h"
 
 @interface MKMainViewController ()
-@property (nonatomic, copy) NSString *account;///<账号
+@property (nonatomic, copy) NSString *username;///<账号
 
 @property (nonatomic, copy) NSString *password;///<密码
 @property (nonatomic, copy) NSString *passwordConfirmation;
@@ -79,23 +79,23 @@
 }
 
 - (void)learnRACObserve {
-    //当self.account改变时打印用户名称
-    [[self rac_valuesForKeyPath:@"account" observer:self] subscribeNext:^(NSString *account) {
-        NSLog(@"\n%s\naccount:%@", __func__, account);
+    //当self.username改变时打印用户名称
+    [[self rac_valuesForKeyPath:@"username" observer:self] subscribeNext:^(NSString *username) {
+        NSLog(@"\n%s\nusername:%@", __func__, username);
     }];
-    [[self rac_valuesAndChangesForKeyPath:@"account" options:NSKeyValueObservingOptionNew observer:self] subscribeNext:^(RACTuple *tuple) {
-        NSString *account = tuple.first;
-        NSLog(@"\n%s\naccount:%@", __func__, account);
+    [[self rac_valuesAndChangesForKeyPath:@"username" options:NSKeyValueObservingOptionNew observer:self] subscribeNext:^(RACTuple *tuple) {
+        NSString *username = tuple.first;
+        NSLog(@"\n%s\nusername:%@", __func__, username);
     }];
     //以等于“Mengqi Yang”规则来过滤
     //skip: 跳过skipCount次链式调用
-    [[[RACObserve(self, account) skip:1] filter:^(NSString *account) {
-        return [account isEqualToString:@"Mengqi Yang"];
-    }] subscribeNext:^(NSString *account) {
-        NSLog(@"\n%s\naccount:%@", __func__, account);
+    [[[RACObserve(self, username) skip:1] filter:^(NSString *username) {
+        return [username isEqualToString:@"Mengqi Yang"];
+    }] subscribeNext:^(NSString *username) {
+        NSLog(@"\n%s\nusername:%@", __func__, username);
     }];
-    [self addObserver:self forKeyPath:@"account" options:NSKeyValueObservingOptionNew context:nil];
-    self.account = @"ReactiveObjC";
+    [self addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:nil];
+    self.username = @"ReactiveObjC";
     //对比RAC与KVO，链式调用代码更集中连贯
 }
 
@@ -117,35 +117,17 @@
     //点击登录按钮处理登录请求
     //RACCommand绑定UI响应事件
     self.loginView.loginButton.rac_command = self.userViewModel.loginCommand;
-    @weakify(self);
-    [_userViewModel.loginCommand.executionSignals subscribeNext:^(RACSignal *loginSignal) {
-        @strongify(self);
-        self.loginView.statusLabel.text = @"登录中...";
-        self.infoView.nicknameLabel.text = @"";
-        self.infoView.genderLabel.text = @"";
-        
-        [loginSignal subscribeNext:^(NSString *messge) {
-            NSLog(@"\n%s\n%@", __func__, messge);
-            @strongify(self);
-            self.loginView.statusLabel.text = @"登录成功";
-            self.infoView.nicknameLabel.text = self.userViewModel.userModel.username;
-            self.infoView.genderLabel.text = self.userViewModel.userModel.gender;
-        }];
-    }];
-    //.errors错误信号订阅nextBlock
-    [_userViewModel.loginCommand.errors subscribeNext:^(NSError *error) {
-        NSLog(@"\n%s\n%@", __func__, error);
-        @strongify(self);
-        self.loginView.statusLabel.text = @"登录失败";
-        self.infoView.nicknameLabel.text = @"";
-        self.infoView.genderLabel.text = @"";
-    }];
+    
+    //RAC()、RACObserve()绑定控件与ViewModel赋值
+    RAC(self.loginView.statusLabel, text) = RACObserve(_userViewModel, status);
+    RAC(self.infoView.nicknameLabel, text) = RACObserve(_userViewModel, nickname);
+    RAC(self.infoView.genderLabel, text) = RACObserve(_userViewModel, gender);
 }
 
 #pragma mark - KVO Methods
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    NSString *account = change[NSKeyValueChangeNewKey];
-    NSLog(@"\n%s\naccount:%@", __func__, account);
+    NSString *username = change[NSKeyValueChangeNewKey];
+    NSLog(@"\n%s\nusername:%@", __func__, username);
 }
 
 #pragma mark - Setter && Getter Methods

@@ -9,16 +9,7 @@
 #import "MKUserModel.h"
 
 @interface MKUserModel()
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *gender;
 @end
 
 @implementation MKUserModel
-
-+ (instancetype)useModelWithUsername:(NSString *)username gender:(NSString *)gender {
-    MKUserModel *userModel = [[MKUserModel alloc] init];
-    userModel.username = username;
-    userModel.gender = gender;
-    return userModel;
-}
 @end

@@ -13,7 +13,9 @@
 #import "MKUserModel.h"
 
 @interface MKUserViewModel : NSObject
-@property (nonatomic, strong, readonly) MKUserModel *userModel;
+@property (nonatomic, copy, readonly) NSString *status;
+@property (nonatomic, copy, readonly) NSString *nickname;
+@property (nonatomic, copy, readonly) NSString *gender;
 
 @property (nonatomic, strong, readonly) RACCommand *loginCommand;
 @end
