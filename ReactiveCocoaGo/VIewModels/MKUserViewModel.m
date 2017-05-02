@@ -66,6 +66,7 @@
 }
 
 - (void)bindModel {
+    //RAC()、RACObserve()绑定ViewModel与Model
     RAC(self, nickname) = [RACObserve(_userModel, nickname) map:^id(NSString *value) {
         if (value.length == 0) {
             return value;

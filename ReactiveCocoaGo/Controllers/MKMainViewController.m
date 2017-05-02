@@ -118,7 +118,7 @@
     //RACCommand绑定UI响应事件
     self.loginView.loginButton.rac_command = self.userViewModel.loginCommand;
     
-    //RAC()、RACObserve()绑定控件与ViewModel赋值
+    //RAC()、RACObserve()绑定控件与ViewModel
     RAC(self.loginView.statusLabel, text) = RACObserve(_userViewModel, status);
     RAC(self.infoView.nicknameLabel, text) = RACObserve(_userViewModel, nickname);
     RAC(self.infoView.genderLabel, text) = RACObserve(_userViewModel, gender);
